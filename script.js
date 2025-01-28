@@ -1,7 +1,20 @@
+
+// Устанавливаем текущую дату и время
+function setCurrentDate() {
+    const now = new Date();
+    document.getElementById('addYear').value = now.getFullYear();
+    document.getElementById('addMounth').value = now.getMonth() + 1; // Месяцы начинаются с 0
+    document.getElementById('addDay').value = now.getDate();
+    document.getElementById('addHours').value = now.getHours();
+    document.getElementById('addMinutes').value = now.getMinutes();
+    document.getElementById('addSeconds').value = now.getSeconds();
+    document.getElementById('currentDate').textContent = `Текущая дата и время: ${now.toLocaleString()}`; // Отображаем текущую дату
+}
+
 document.getElementById('form').addEventListener('submit', function (event) {
     event.preventDefault(); // Запретить отправку формы
 
-    // Получить значения из input
+    // Получение значений из input
     const taskTitle = document.querySelector('.form__input_title').value.trim();
     const year = parseInt(document.getElementById('addYear').value) || 0;
     const month = parseInt(document.getElementById('addMounth').value) || 0;
@@ -19,24 +32,26 @@ document.getElementById('form').addEventListener('submit', function (event) {
     // Создать дату на основе введенного значения
     const deadline = new Date(year, month - 1, day, hours, minutes, seconds);
 
-    // Проверить, наступил ли крайний срок в будущем
+    // Проверка, наступил ли крайний срок в будущем
     const now = new Date();
     if (deadline <= now) {
         alert('Дата выполнения задачи должна быть больше текущей даты.');
         return; // Выйти из функции, если дата неверна
     }
 
-    // Добавляет задачу и начинает обратный отсчет
+    // Добавляем задачу
     addTask(taskTitle, deadline);
-    saveTasks(); // Сохраним задачи
+    saveTasks(); // Сохраняем задачи
     document.getElementById('form').reset(); // Очистить поля формы после добавления задачи
+
+    // Обновляем текущую дату после добавления задачи
+    setCurrentDate();
 });
 
-// Функция добавления задачи
 function addTask(title, deadline) {
     const taskWrapper = document.createElement('div');
     taskWrapper.className = 'task-wrapper';
-    taskWrapper.setAttribute('data-deadline', deadline); // Сохраняем дедлайн в атрибуте
+    taskWrapper.setAttribute('data-deadline', deadline);
 
     const taskTitleElement = document.createElement('h2');
     taskTitleElement.className = 'title';
@@ -57,20 +72,16 @@ function addTask(title, deadline) {
     countdownElement.className = 'countdown';
     countdownElement.innerHTML = `
                 <div class="countdown-item">
-                    <h4 class="days">0</h4>
-                    <span>дни</span>
+                    <h4 class="days">0</h4><span>дни</span>
                 </div>
                 <div class="countdown-item">
-                    <h4 class="hours">0</h4>
-                    <span>часы</span>
+                    <h4 class="hours">0</h4><span>часы</span>
                 </div>
                 <div class="countdown-item">
-                    <h4 class="minutes">0</h4>
-                    <span>минуты</span>
+                    <h4 class="minutes">0</h4><span>минуты</span>
                 </div>
                 <div class="countdown-item">
-                    <h4 class="seconds">0</h4>
-                    <span>секунды</span>
+                    <h4 class="seconds">0</h4><span>секунды</span>
                 </div>
             `;
     taskWrapper.appendChild(countdownElement);
@@ -80,7 +91,6 @@ function addTask(title, deadline) {
     startCountdown(deadline, countdownElement);
 }
 
-// Функция обратного отсчета
 function startCountdown(deadline, countdownElement) {
     const interval = setInterval(() => {
         const now = new Date();
@@ -124,6 +134,8 @@ function loadTasks() {
     });
 }
 
-// Загружаем задачи при загрузке страницы
-window.onload = loadTasks;
-
+// Загружаем задачи и текущую дату при загрузке страницы
+window.onload = function () {
+    loadTasks();
+    setCurrentDate();
+};
