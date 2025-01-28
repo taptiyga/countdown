@@ -13,39 +13,20 @@
 
 <body>
     <div class="container">
-        <form action="" class="form form__none">
-            <input class="form__input" type="text" placeholder="Задача">
-            <input class="form__input" type="text" placeholder="Год">
-            <input class="form__input" type="text" placeholder="Месяц">
-            <input class="form__input" type="text" placeholder="День">
-            <input class="form__input" type="text" placeholder="Часы">
-            <input class="form__input" type="text" placeholder="Минуты">
-            <input class="form__input" type="text" placeholder="Секунды">
-            <button class="form__input" type="submit">Создать</button>
+        <form action="" class="form" id="form">
+            <input class="form__input form__input_title" type="text" placeholder="Задача">
+            <div class="form__wrapper" id="formList">
+                <input class="form__input" id="addYear" type="number" placeholder="Год">
+                <input class="form__input" id="addMounth" type="number" placeholder="Месяц">
+                <input class="form__input" id="addDay" type="number" placeholder="День">
+                <input class="form__input" id="addHours" type="number" placeholder="Часы">
+                <input class="form__input" id="addMinutes" type="number" placeholder="Минуты">
+                <input class="form__input" id="addSeconds" type="number" placeholder="Секунды">
+            </div>
+            <button class="button" id="addTaskButton" type="submit">Создать</button>
         </form>
         <div class="tasks-wrapper">
-            <div class="task-wrapper">
 
-                <h2 class="title">Сменить работу<span>Х</span> </h2>
-                <div class="countdown">
-                    <div class="countdown-item">
-                        <h4 class="days">10</h4>
-                        <span>дни</span>
-                    </div>
-                    <div class="countdown-item">
-                        <h4 class="hours">18</h4>
-                        <span>часы</span>
-                    </div>
-                    <div class="countdown-item">
-                        <h4 class="minutes">30</h4>
-                        <span>минуты</span>
-                    </div>
-                    <div class="countdown-item">
-                        <h4 class="seconds">05</h4>
-                        <span>секунды</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
